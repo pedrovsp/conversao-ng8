@@ -3,7 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
 import { Cliente } from './cliente';
 
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ClientesService {
@@ -22,10 +22,8 @@ export class ClientesService {
   }
 
   add(cliente: Cliente) {
-    // return this.http.post(this.url, JSON.stringify(cliente),
-      // { headers: this.getHeaders() })
-      // .do(data => this.clientesChanged.emit(this.getAll()))
-      // .catch(this.handleError);
+    return this.http.post(this.url, JSON.stringify(cliente),
+      { headers: this.getHeaders() }).pipe(tap(data => this.clientesChanged.emit(this.getAll()), error => this.handleError(error)));
   }
 
   remove(id: number) {
