@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { User } from './user';
 import { Http, Headers } from '@angular/http';
 import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class LoginServiceService {
@@ -23,8 +22,8 @@ export class LoginServiceService {
       error => this.authenticated = false)).subscribe();
   }
 
-  login(token) {
-    localStorage.setItem('token', JSON.stringify(token));
+  login(body) {
+    localStorage.setItem('token', JSON.stringify(body.token));
     this.showNavBar(true);
     this.router.navigate(['/']);
   }

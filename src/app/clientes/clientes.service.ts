@@ -4,11 +4,12 @@ import { Observable } from 'rxjs';
 import { Cliente } from './cliente';
 
 import { map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ClientesService {
 
-  private url: string = 'http://localhost:8080/clientes';
+  private url: string = environment.apiAddress + '/clientes';
 
   clientesChanged = new EventEmitter<Observable<Cliente[]>>();
 
