@@ -1,25 +1,32 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from './user';
+import { Http, Headers } from '@angular/http';
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class LoginServiceService {
+
+  private url: string = 'http://localhost:8080/auth';
 
   public showNavBarEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private authenticated = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private http: Http) { }
 
   signIn(user: User) {
-    if((user.email === 'user@email.com' || user.email === 'usuario@email.com')
-    && user.password === '123456') {
-      this.authenticated = true;
-      this.showNavBar(true);
-      this.router.navigate(['/']);
-    } else {
-      this.authenticated = false;
-    }
+    this.http.post(this.url + '/login', JSON.stringify(user), { headers: this.getHeaders() }).pipe(tap(
+      data => this.login(data.json()),
+      error => this.authenticated = false)).subscribe();
+  }
+
+  login(token) {
+    localStorage.setItem('token', JSON.stringify(token));
+    this.showNavBar(true);
+    this.router.navigate(['/']);
   }
 
   logout() {
@@ -34,6 +41,12 @@ export class LoginServiceService {
 
   private showNavBar(ifShow: boolean) {
     this.showNavBarEmitter.emit(ifShow);
+  }
+
+  private getHeaders() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return headers;
   }
 
 }

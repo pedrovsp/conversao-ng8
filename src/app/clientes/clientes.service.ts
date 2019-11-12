@@ -32,7 +32,6 @@ export class ClientesService {
         map(res => res.json(),
             error => this.handleError(error))
       );
-      // .do(data => this.clientesChanged.emit(this.getAll()))
   }
 
   update(cliente: Cliente) {
