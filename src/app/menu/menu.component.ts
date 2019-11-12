@@ -10,7 +10,7 @@ export class MenuComponent implements OnInit {
 
   constructor(private authService: LoginServiceService) { }
 
-  private showNavBar: boolean = false;
+  public showNavBar: boolean = false;
 
   ngOnInit() {
     this.authService.showNavBarEmitter.subscribe(

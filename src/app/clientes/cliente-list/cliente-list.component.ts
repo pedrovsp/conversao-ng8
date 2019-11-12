@@ -13,6 +13,7 @@ export class ClienteListComponent implements OnInit {
 
   clientes: Cliente[] = [];
   criterio: String;
+  searchText: String;
 
   ngOnInit() {
     /*this.clientes = [{

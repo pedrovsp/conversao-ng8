@@ -11,13 +11,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login/login.component';
 import { LoginServiceService } from './login/login-service.service';
 import { AuthGuard } from './login/login-guard';
+import { FilterPipe } from './clientes/filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
