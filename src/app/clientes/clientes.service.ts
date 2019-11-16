@@ -1,68 +1,38 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http, Headers } from '@angular/http';
 import { Observable } from 'rxjs';
-import { Cliente } from './cliente';
 
-import { map, tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/internal/operators/tap';
+import { User } from '../login/user';
+import { HttpService } from '../services/http.service';
 
 @Injectable()
 export class ClientesService {
 
-  private url: string = environment.apiAddress + '/clientes';
+  private resource = 'users/';
 
-  clientesChanged = new EventEmitter<Observable<Cliente[]>>();
+  clientesChanged = new EventEmitter<Observable<User[]>>();
 
-  constructor(private http: Http) { }
+  constructor(private httpService: HttpService) { }
 
-  getAll(): Observable<Cliente[]> {
-    return this.http.get(this.url)
-      .pipe(map(res => res.json(),
-        error => this.handleError(error)),
-      );
+  getAll(): Observable<User[]> {
+    return this.httpService.doGet(this.resource);
   }
 
-  add(cliente: Cliente) {
-    return this.http.post(this.url, JSON.stringify(cliente),
-      { headers: this.getHeaders() }).pipe(tap(data => this.clientesChanged.emit(this.getAll()), error => this.handleError(error)));
+  add(cliente: User) {
+    return this.httpService.doPost(this.resource, JSON.stringify(cliente))
+    .pipe(tap(data => this.clientesChanged.emit(this.getAll())));
   }
 
   remove(id: number) {
-    return this.http.delete(this.getUrl(id),
-      { headers: this.getHeaders() }).pipe(
-        map(res => res.json(),
-            error => this.handleError(error))
-      );
+    return this.httpService.doDelete(this.resource + id);
   }
 
-  update(cliente: Cliente) {
-    return this.http.put(this.url, JSON.stringify(cliente),
-      { headers: this.getHeaders() }).pipe(
-        map(data => this.clientesChanged.emit(this.getAll()),
-            error => this.handleError(error))
-      );
+  update(cliente: User) {
+    return this.httpService.doPut(this.resource, JSON.stringify(cliente));
   }
 
-  get(id: number) {
-    return this.getAll().pipe(
-      map((list: any) => list.find(cliente => cliente.codigo == id),
-          error => this.handleError(error)));
-  }
-
-  private handleError(error: any) {
-    let erro = error.message || 'Server error';
-    console.error('Ocorreu um erro', error);
-    return Observable.throw(erro);
-  }
-
-  private getHeaders() {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return headers;
-  }
-
-  private getUrl(id: number) {
-    return '${this.url}/${id}';
+  getById(id: number): Observable<User> {
+    return this.httpService.doGet<User>(this.resource + id);
   }
 
 }

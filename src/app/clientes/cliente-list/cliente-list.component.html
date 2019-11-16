@@ -6,28 +6,18 @@
     <tr>
       <th>Código</th>
       <th>Nome</th>
-      <th>Cargo</th>
-      <th>Endereço</th>
-      <th>Cidade</th>
-      <th>CEP</th>
-      <th>País</th>
+      <th>Email</th>
       <th>Telefone</th>
-      <th>Fax</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let clienteTabela of clientes | filter:searchText">
-      <a [routerLink]="[clienteTabela.codigo]">
-        <td>{{clienteTabela.codigo}}</td>
+      <a [routerLink]="[clienteTabela.id]">
+        <td>{{clienteTabela.id}}</td>
       </a>
-      <td>{{clienteTabela.nome}}</td>
-      <td>{{clienteTabela.cargo}}</td>
-      <td>{{clienteTabela.endereco}}</td>
-      <td>{{clienteTabela.cidade}}</td>
-      <td>{{clienteTabela.cep}}</td>
-      <td>{{clienteTabela.pais}}</td>
-      <td>{{clienteTabela.telefone}}</td>
-      <td>{{clienteTabela.fax}}</td>
+      <td>{{clienteTabela.name}}</td>
+      <td>{{clienteTabela.email}}</td>
+      <td>{{clienteTabela.phone}}</td>
     </tr>
   </tbody>
 </table>

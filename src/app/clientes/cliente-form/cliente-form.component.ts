@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { ClientesService } from '../clientes.service';
 import { Cliente } from '../cliente';
+import { User } from 'src/app/login/user';
 
 @Component({
   selector: 'app-cliente-form',
@@ -12,13 +13,13 @@ import { Cliente } from '../cliente';
 export class ClienteFormComponent implements OnInit {
 
   private clienteIndex: number;
-  public isNew: boolean = true;
-  public cliente: Cliente;
+  public isNew = true;
+  public cliente: User;
   private subscription: Subscription;
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private clienteService: ClientesService) { }
+              private router: Router,
+              private clienteService: ClientesService) { }
 
   ngOnInit() {
     this.novo();
@@ -28,7 +29,7 @@ export class ClienteFormComponent implements OnInit {
           this.isNew = false;
           this.clienteIndex = params['id'];
           this.clienteIndex = +params['id'];
-          this.clienteService.get(this.clienteIndex).subscribe(data => this.cliente = data);
+          this.clienteService.getById(this.clienteIndex).subscribe(data => this.cliente = data);
         } else {
           this.isNew = true;
         }
@@ -37,7 +38,7 @@ export class ClienteFormComponent implements OnInit {
   }
 
   novo() {
-    this.cliente = new Cliente();
+    this.cliente = new User();
   }
 
   salvar() {
@@ -51,16 +52,16 @@ export class ClienteFormComponent implements OnInit {
     this.voltar();
     result.subscribe(data => alert('Sucesso ' + data),
       err => {
-        alert("An error occurred. " + err);
+        alert('An error occurred. ' + err);
       });
   }
 
   excluir() {
-    if (this.cliente.codigo == null) {
-      alert("Selecione algum cliente.");
+    if (this.cliente.id == null) {
+      alert('Selecione algum cliente.');
     } else {
-      if (confirm("Você realmente quer excluir o cliente " + this.cliente.nome + "?")) {
-        this.clienteService.remove(this.cliente.codigo)
+      if (confirm('Você realmente quer excluir o cliente ' + this.cliente.name + '?')) {
+        this.clienteService.remove(this.cliente.id)
           .subscribe(
             data => alert('Cliente removido ' + data),
             err => {
