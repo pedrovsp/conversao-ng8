@@ -20,6 +20,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'produtos',
+    loadChildren: () => import('./produtos/product.module').then(m => m.ProductModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'signin',
     component: LoginComponent
   }

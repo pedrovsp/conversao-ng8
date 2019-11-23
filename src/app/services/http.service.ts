@@ -21,12 +21,16 @@ export class HttpService {
     return this.httpClient.get<T>(API_URL + resource, { headers: this.getLoggedHeaders() })
       .pipe(tap(
         success => {
-          return success;
+          return this.parseReturn(success);
         },
         error => {
           this.handleError(error);
         }
       ), finalize(() => this.loading = false));
+  }
+
+  private parseReturn(value) {
+    return null;
   }
 
   public doPost<T>(resource: string, body: T): Observable<T> {
@@ -75,10 +79,10 @@ export class HttpService {
   }
 
   private getLoggedHeaders() {
-	let headers = new HttpHeaders();
-	headers = headers.append('Content-Type', 'application/json');
-	headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
-	return headers;
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return headers;
   }
 
 }
