@@ -7,7 +7,12 @@ import { EditProductComponent } from './pages/edit-product/edit-product.componen
 const routes: Routes = [
   {
     path: '',
-    component: ProductsPageComponent
+    component: ProductsPageComponent,
+     
+  },
+  {
+    path: 'new',
+    component: EditProductComponent
   },
   {
     path: ':id',

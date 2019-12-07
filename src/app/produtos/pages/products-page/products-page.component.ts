@@ -24,10 +24,6 @@ export class ProductsPageComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  edit(product: Product) {
-    // to do
-  }
-
   delete(product: Product) {
     this.productService.remove(product.id).pipe(tap(() => {
       const indexToRemove = this.products.findIndex(prod => prod.id === product.id);

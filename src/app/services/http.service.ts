@@ -44,7 +44,7 @@ export class HttpService {
 
   public doPut<T>(resource: string, body: T): Observable<T> {
     this.loading = true;
-    return this.httpClient.post<T>(API_URL + resource, body, { headers: this.getLoggedHeaders() })
+    return this.httpClient.put<T>(API_URL + resource, body, { headers: this.getLoggedHeaders() })
       .pipe(tap(
         success => {
           return success;

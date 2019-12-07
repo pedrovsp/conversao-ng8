@@ -1,4 +1,4 @@
-<form [formGroup]="productForm" (submit)="save()" *ngIf="product">
+<form [formGroup]="productForm" (submit)="save()" *ngIf="productForm">
     <div>
         <label>Nome</label>
         <input formControlName="name" type="text">

@@ -25,7 +25,7 @@ export class ProductService {
   }
 
   update(produto: Product) {
-    return this.httpService.doPut(url, JSON.stringify(produto));
+    return this.httpService.doPut(url + produto.id, JSON.stringify(produto));
   }
 
   getById(id: number): Observable<Product> {

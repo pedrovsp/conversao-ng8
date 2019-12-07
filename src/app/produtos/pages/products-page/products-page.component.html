@@ -13,10 +13,10 @@
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
             <td>
-                <button (click)="edit(product)">Editar</button>
+                <button [routerLink]="[product.id]">Editar</button>
                 <button (click)="delete(product)">Excluir</button>
             </td>
         </tr>
     </tbody>
 </table>
-<button (click)="new()"></button>
+<button [routerLink]="['new']">Novo produto</button>

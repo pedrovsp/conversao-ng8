@@ -25,6 +25,7 @@ export class LoginServiceService {
   }
 
   login(body) {
+    this.authenticated = true;
     localStorage.setItem('token', body.token);
     this.showNavBar(true);
     this.router.navigate(['/']);
