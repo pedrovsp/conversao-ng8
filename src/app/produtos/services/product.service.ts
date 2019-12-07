@@ -15,8 +15,8 @@ export class ProductService {
     return this.httpService.doGet(url);
   }
 
-  add(cliente: Product) {
-    return this.httpService.doPost(url, JSON.stringify(cliente))
+  add(produto: Product) {
+    return this.httpService.doPost(url, JSON.stringify(produto))
     .pipe(tap(data => this.getProducts()));
   }
 
@@ -24,8 +24,8 @@ export class ProductService {
     return this.httpService.doDelete(url + id);
   }
 
-  update(cliente: Product) {
-    return this.httpService.doPut(url, JSON.stringify(cliente));
+  update(produto: Product) {
+    return this.httpService.doPut(url, JSON.stringify(produto));
   }
 
   getById(id: number): Observable<Product> {
