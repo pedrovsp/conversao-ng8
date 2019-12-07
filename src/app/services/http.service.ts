@@ -21,16 +21,12 @@ export class HttpService {
     return this.httpClient.get<T>(API_URL + resource, { headers: this.getLoggedHeaders() })
       .pipe(tap(
         success => {
-          return this.parseReturn(success);
+          return success;
         },
         error => {
           this.handleError(error);
         }
       ), finalize(() => this.loading = false));
-  }
-
-  private parseReturn(value) {
-    return null;
   }
 
   public doPost<T>(resource: string, body: T): Observable<T> {
@@ -73,8 +69,8 @@ export class HttpService {
   }
 
   private handleError(error: any) {
-    const erro = error.message || 'Server error';
-    console.error('Ocorreu um erro: ', error);
+    const erro = error.status || 'Server error';
+    alert('Ocorreu um erro: ' + error.error.error);
     return throwError(erro);
   }
 

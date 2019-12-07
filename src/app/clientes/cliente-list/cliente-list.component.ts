@@ -18,8 +18,7 @@ export class ClienteListComponent implements OnInit {
 
   ngOnInit() {
     this.clienteService.getAll()
-      .subscribe(data => this.clientes = data,
-        err => alert('Aconteceu um erro!' + err)
+      .subscribe(data => this.clientes = data
       );
     this.clienteService.clientesChanged.subscribe(
       (observable: any) => observable.subscribe(
